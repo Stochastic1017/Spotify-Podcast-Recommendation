@@ -5,6 +5,7 @@ dash.register_page(__name__, path="/")
 
 layout = html.Div(
     id="intro-page",
+    className="glitch-animation",
     style={
         'backgroundColor': 'black',
         'height': '100vh',
@@ -20,6 +21,7 @@ layout = html.Div(
         'transition': 'opacity 1s ease-in-out',
     },
     children=[
+        # Video Element
         html.Video(
             id="intro-video",
             src='/assets/SpotifyLogo.mp4',
@@ -29,64 +31,23 @@ layout = html.Div(
             muted=True,
             style={'width': '50%'},
         ),
+        # Interval to trigger navigation
         dcc.Interval(
-            id="show-button-timer",
-            interval=4000,  # Show button after 4 seconds
+            id="redirect-timer",
+            interval=4000,
             n_intervals=0,
             max_intervals=1,
-        ),
-        html.Div(
-            id="button-container",
-            children=html.Button(
-                "Enter App",  # Button text
-                id="enter-button",
-                style={
-                    'marginTop': '20px',
-                    'padding': '10px 20px',
-                    'fontSize': '16px',
-                    'backgroundColor': '#1DB954',
-                    'color': 'white',
-                    'border': 'none',
-                    'borderRadius': '30px',
-                    'cursor': 'pointer',
-                    'display': 'none',  # Initially hidden
-                },
-                className="fade-in",  # Add animation class
-            ),
-            style={'height': '80px', 'display': 'flex', 'alignItems': 'center'},
         ),
     ]
 )
 
-# Callback to show the button after timer completes
-@callback(
-    Output("enter-button", "style"),
-    Input("show-button-timer", "n_intervals"),
-)
-def show_button(n_intervals):
-    if n_intervals > 0:
-        return {
-            'marginTop': '20px',
-            'padding': '10px 20px',
-            'fontSize': '16px',
-            'backgroundColor': '#1DB954',
-            'color': 'white',
-            'border': 'none',
-            'borderRadius': '30px',
-            'cursor': 'pointer',
-            'display': 'inline-block',  # Make it visible
-            'transition': 'opacity 1s ease-in-out, transform 0.3s ease',
-            'opacity': '1',
-        }
-    return {'display': 'none'}
-
-# Callback to navigate to main page
+# Callback to navigate to the main page after the interval
 @callback(
     Output("url", "pathname"),
-    Input("enter-button", "n_clicks"),
+    Input("redirect-timer", "n_intervals"),
     prevent_initial_call=True,
 )
-def navigate_to_main(n_clicks):
-    if n_clicks:
+def navigate_to_main(n_intervals):
+    if n_intervals > 0:
         return "/main"
     return "/"

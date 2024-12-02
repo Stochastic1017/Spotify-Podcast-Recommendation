@@ -17,15 +17,6 @@ podcast_options = sorted(
     key=lambda x: x["label"]
 )
 
-# Lighten color to not overbear the text
-def lighten_color(color, factor=0.7):
-    """Lightens an RGB color by a given factor."""
-    r, g, b = [x / 255.0 for x in color]  # Convert to [0, 1] range
-    h, l, s = rgb_to_hls(r, g, b)
-    l = min(1.0, l + factor * (1.0 - l))  # Lighten the luminance
-    r, g, b = hls_to_rgb(h, l, s)
-    return f"rgb({int(r * 255)}, {int(g * 255)}, {int(b * 255)})"
-
 # Function to get dominant colors from an image
 def get_dominant_colors(image_url, num_colors=3):
     response = requests.get(image_url)
@@ -157,7 +148,8 @@ def update_podcast_details(selected_podcast):
     try:
         colors = get_dominant_colors(image_url)
         border_color = colors[0]
-        shadow_color = lighten_color(tuple(int(c) for c in colors[0][4:-1].split(", ")), 0.3)
+        shadow_color = colors[0]
+
     except Exception:
         # Fallback colors (Spotify green gradient)
         border_color = "#1DB954"
@@ -220,7 +212,7 @@ def update_podcast_details(selected_podcast):
                             'transition': 'transform 0.2s',
                             'display': 'inline-block',
                         },
-                        className='spotify-button'
+                        className='click-button'
                     ),
                     html.Button(
                         "+",
@@ -236,7 +228,7 @@ def update_podcast_details(selected_podcast):
                             'cursor': 'pointer',
                             'transition': 'all 0.3s ease',
                         },
-                        className="add-button"
+                        className="click-button"
                     )
                 ],
                 style={'display': 'flex', 'justifyContent': 'center', 'gap': '10px'}
@@ -253,9 +245,8 @@ def update_podcast_details(selected_podcast):
     # Update container style with dynamic border and shadow
     container_style = {
         **default_style,
-        'boxShadow': f"0 10px 30px {shadow_color}",  # Dynamic shadow
+        'boxShadow': f"0 10px 20px {shadow_color}",  # Dynamic shadow
         'border': f"2px solid {border_color}",  # Dynamic border color
     }
 
     return details, container_style
-

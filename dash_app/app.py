@@ -1,18 +1,19 @@
+
 import dash
 from dash import dcc, html
 
 # Create the Dash app
 app = dash.Dash(
     __name__,
-    use_pages=True,                     # Automatically detects pages in the pages/ folder
-    suppress_callback_exceptions=True,  # Allow callbacks for dynamically generated layouts
+    use_pages=True,
+    suppress_callback_exceptions=True
 )
 
 # App layout
 app.layout = html.Div(
     children=[
-        dcc.Location(id="url"),  # Tracks current page
-        dash.page_container,     # Automatically displays content of the current page
+        dcc.Location(id="url"),  # Tracks the current page
+        dash.page_container,     # Dynamically loads the current page content
     ]
 )
 

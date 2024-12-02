@@ -1,14 +1,23 @@
+/* Global Dark Theme Overrides */
+html, body {
+    background-color: #121212 !important;
+    color: white !important;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 /* Enhanced Button Styles */
-#enter-button {
-    background-color: #1ED760; /* Slightly brighter Spotify green */
-    color: black;
+.click-button {
+    background-color: #1ED760; /* Spotify green */
+    color: white;
     font-family: 'Circular', 'Arial', sans-serif;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: bold;
     letter-spacing: 0.5px;
     padding: 15px 30px;
     border: none;
-    border-radius: 50px; /* Pronounced rounded corners */
+    border-radius: 30px; /* Rounded corners */
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -23,20 +32,20 @@
 }
 
 /* Button hover effect */
-#enter-button:hover {
+.click-button:hover {
     transform: scale(1.07);
     background-position: right center;
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25), inset 0 -3px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Button press effect */
-#enter-button:active {
+.click-button:active {
     transform: scale(0.95);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Button glow hover effect */
-#enter-button::before {
+.click-button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -47,10 +56,56 @@
     transition: all 0.6s;
 }
 
-#enter-button:hover::before {
+.click-button:hover::before {
     left: 100%;
 }
 
+/* Glitchy Transition Class */
+.glitch-transition {
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    opacity: 1;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out, filter 0.1s ease-in-out;
+    animation: glitch-animation 1.5s steps(10) infinite;
+  }
+  
+  /* Keyframes for Glitch Effect */
+  @keyframes glitch-animation {
+    0% {
+      transform: scale(1) rotate(0deg);
+      filter: contrast(100%) brightness(100%);
+    }
+    10% {
+      transform: scale(1.05) rotate(2deg) skew(2deg, -1deg);
+      filter: contrast(150%) brightness(120%);
+    }
+    20% {
+      transform: scale(0.95) rotate(-2deg) skew(-2deg, 2deg);
+      filter: contrast(200%) brightness(140%);
+    }
+    30% {
+      transform: scale(1.02) rotate(1deg);
+      filter: contrast(250%) brightness(160%);
+    }
+    40% {
+      transform: scale(0.98) rotate(-1deg) skew(1deg, -2deg);
+      filter: contrast(300%) brightness(180%);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      filter: contrast(100%) brightness(100%);
+    }
+  }
+  
 /* Custom Dropdown Styles */
 .custom-dropdown .Select-control {
     background: linear-gradient(135deg, #1DB954, #1ED760);
